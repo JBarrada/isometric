@@ -1,0 +1,16 @@
+f width: 36
+f height: 47
+f top: 0
+f left: 0
+iso bottom: 21
+iso left: 18
+tiles x: 1
+tiles y: 1
+tiles z: 1
+anim count: 0
+anim fps: 0
+bitmap path: bitmaps\RAIL2.bmp
+sprite name: RAIL2
+debug r: 0
+debug g: 255
+debug b: 0
