@@ -1,4 +1,3 @@
-/** @author Levente Kurusa <levex@linux.com> **/
 #ifndef __IDT_H_
 #define __IDT_H_
 
@@ -12,8 +11,7 @@ typedef struct {
 	uint16_t offset_16_31;
 } __attribute__((packed)) idt_descriptor;
 
-struct cpu_state{
-	/*pushad registers (in order)*/
+struct cpu_state {
 	uint32_t edi;
 	uint32_t esi;
 	uint32_t ebp;
@@ -22,22 +20,21 @@ struct cpu_state{
 	uint32_t edx;
 	uint32_t ecx;
 	uint32_t eax;
-	/*interrupt vector*/
+	
 	uint32_t vector;
-	/*pushed by the interrupt*/
+	
 	uint32_t eip;
 	uint32_t cs;
 	uint32_t eflags;
 };
 
 #define IDT_32BIT_INTERRUPT_GATE	0xE
-#define IDT_STORAGE_SEGMENT		0x20
-#define IDT_DPL_3			0x60
-#define IDT_PRESENT			0x80
+#define IDT_STORAGE_SEGMENT			0x20
+#define IDT_DPL_3					0x60
+#define IDT_PRESENT					0x80
 
 #define INT_START asm volatile("pusha");
-#define INT_END asm volatile("popa"); \
-	asm volatile("iret");
+#define INT_END asm volatile("popa"); asm volatile("iret");
 
 extern void _set_idtr();
 

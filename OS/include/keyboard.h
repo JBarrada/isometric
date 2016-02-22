@@ -3,48 +3,36 @@
 
 #include <stdint.h>
 
-enum KEYCODE {
-	ESC_PRESSED = 0x01,
-	ESC_RELEASED = 0x81,
-	
-	F1_PRESSED = 0x3B,
-	F2_PRESSED = 0x3C,
-	F3_PRESSED = 0x3D,
-	F4_PRESSED = 0x3E,
-	F5_PRESSED = 0x3F,
-	F6_PRESSED = 0x40,
-	F7_PRESSED = 0x41,
-	F8_PRESSED = 0x42,
-	F9_PRESSED = 0x43,
-	F10_PRESSED = 0x44,
-	F11_PRESSED = 0x57,
-	F12_PRESSED = 0x58,
-	
-	UP_PRESSED = 0x48,
-	UP_RELEASED = 0xC8,
-	DOWN_PRESSED = 0x50,
-	DOWN_RELEASED = 0xD0,
-	LEFT_PRESSED = 0x4B,
-	LEFT_RELEASED = 0xCB,
-	RIGHT_PRESSED = 0x4D,
-	RIGHT_RELEASED = 0xCD,
-	
-	L_SHIFT_PRESSED = 0x2A,
-	L_SHIFT_RELEASED = 0xAA,
-	R_SHIFT_PRESSED = 0x36,
-	R_SHIFT_RELEASED = 0xB6,
-	CTRL_PRESSED = 0x1D,
-	CTRL_RELEASED = 0x9D,
-	ALT_PRESSED = 0x38,
-	ALT_RELEASED =0xB8,
-	
-	BACKSPACE_PRESSED = 0xE,
-	BACKSPACE_RELEASED = 0x8E,
-	SPACE_PRESSED = 0x39,
-	SPACE_RELEASED = 0xB9,
-	ENTER_PRESSED = 0x1C,
-	ENTER_RELEASED = 0x9C,
-};
+# define KEY_ESC 		0x01
+
+# define KEY_F1 		0x3B
+# define KEY_F2 		0x3C
+# define KEY_F3 		0x3D
+# define KEY_F4 		0x3E
+# define KEY_F5 		0x3F
+# define KEY_F6 		0x40
+# define KEY_F7 		0x41
+# define KEY_F8 		0x42
+# define KEY_F9 		0x43
+# define KEY_F10		0x44
+# define KEY_F11		0x57
+# define KEY_F12		0x58
+
+# define UP 			0x48
+# define DOWN 			0x50
+# define LEFT 			0x4B
+# define RIGHT 			0x4D
+
+# define KEY_L_SHIFT 	0x2A
+# define KEY_R_SHIFT 	0x36
+# define KEY_CTRL 		0x1D
+# define KEY_ALT 		0x38
+
+# define KEY_BACKSPACE 	0x0E
+# define KEY_SPACE 		0x39
+# define KEY_ENTER 		0x1C
+
+#define RELEASE 0x80
 
 void keyboard_irq();
 void keyboard_init();

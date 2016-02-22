@@ -1,14 +1,16 @@
 #ifndef IO
 #define IO 1
 
-extern void * memcpy ( void * destination, const void * source, unsigned int num);
-extern void * memset ( void * ptr, int value, unsigned int num );
+#include <stdint.h>
 
-void outb(unsigned short port,unsigned char value);
-void outw(unsigned short port,unsigned short value);
-void outl(unsigned short port,unsigned int value);
-unsigned char inb(unsigned short port);
-unsigned short inw(unsigned short port);
-unsigned int inl(unsigned short port);
+extern void * memcpy (void * destination, const void * source, uint32_t num);
+extern void * memset (void * ptr, int value, uint32_t num);
+
+void outb(uint16_t port,uint8_t value);
+void outw(uint16_t port,uint16_t value);
+void outl(uint16_t port,uint32_t value);
+uint8_t inb(uint16_t port);
+uint16_t inw(uint16_t port);
+uint32_t inl(uint16_t port);
 
 #endif
