@@ -4,18 +4,23 @@
 #include <stdint.h>
 #include <sprite.h>
 
+#define ISIZE 20.0
+
 typedef struct tagMAP {
 	uint16_t width;
 	uint16_t height;
 
 	uint16_t sprite_count;
 	
+	float character_pos_top[2];
+	
 	uint8_t *palette;
 	
 	uint16_t *grid;
 	
-	SPRITE *sprites;
+	SPRITE sprites[256];
 } MAP;
 
 uint8_t load_map(uint8_t *map_data, MAP *map);
+void draw_map(MAP *map);
 #endif

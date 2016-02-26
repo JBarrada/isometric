@@ -18,15 +18,14 @@ uint8_t load_sprite(uint8_t *sprite_data, SPRITE *sprite) {
 
 void draw_sprite(int cx, int cy, SPRITE *sprite) {
 	int ox=cx-sprite->i_left, oy=cy-sprite->i_bot;
-	uint8_t index = 0;
 	
-	for (int y=0; y<sprite->height; y++) {
-		for (int x=0; x<sprite->width; x++) {
-			index = sprite->bitmap[y*sprite->width+x];
-			if (index != 255)
-				set_pixel(ox+x, oy+y, index);
+	for (uint16_t y=0; y<sprite->height; y++) {
+		for (uint16_t x=0; x<sprite->width; x++) {
+			set_pixel(ox+x, oy+y, 255);
+			uint8_t index = sprite->bitmap[y*sprite->width+x];
+			if (index != 0xff) {
+				//set_pixel(ox+x, oy+y, index);
+			}
 		}
 	}
-	
-	set_pixel(0, 0, 0x32);
 }

@@ -92,7 +92,7 @@ class Map:
         global_palette = [0]*(255*3) + [0, 63, 0]
         global_pal_pos = 0
 
-        f.seek(774+(2*len(new_bank))+2)
+        f.seek(776+(4*len(new_bank))+2)
         for s in new_bank:
             sprite_remap = [0]*256
             for i in range(255):
@@ -133,20 +133,20 @@ class Map:
             f.write(tile_bytes)
 
         f.seek(4, 0)
-        grid_start_bytes = struct.pack('<h', grid_start)
+        grid_start_bytes = struct.pack('<I', grid_start)
         f.write(grid_start_bytes)
 
         # write palette
-        f.seek(6, 0)
+        f.seek(8, 0)
         for i in range(256*3):
             f.write(chr(global_palette[i]))
 
         # write start positions
-        f.seek(774, 0)
+        f.seek(776, 0)
         sprite_count_bytes = struct.pack('<h', len(new_bank))
         f.write(sprite_count_bytes)
         for start in sprite_starts:
-            sprite_start_bytes = struct.pack('<h', start)
+            sprite_start_bytes = struct.pack('<I', start)
             f.write(sprite_start_bytes)
 
         f.close()

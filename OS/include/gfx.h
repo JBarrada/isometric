@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+volatile uint8_t back_buffer[320*200];
+
 void set_pixel(int x, int y, uint8_t c);
 void clear();
 void flush();

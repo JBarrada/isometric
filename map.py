@@ -246,7 +246,7 @@ def keyboard(key, x, y):
 
     if key == 'l':
         m = map_file.Map()
-        m.load('test.isomap')
+        m.load('default_map1.isomap')
         load_map(m)
         return
 
