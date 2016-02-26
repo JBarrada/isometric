@@ -240,12 +240,13 @@ def keyboard(key, x, y):
 
     if key == 's':
         m = map_file.Map(grid_width, grid_height, sprite_bank, grid)
-        m.save('default_map1.isomap')
+        m.save('test.isomap')
+        m.save_zipmap('test.zipmap')
         return
 
     if key == 'l':
         m = map_file.Map()
-        m.load('default_map1.isomap')
+        m.load('test.isomap')
         load_map(m)
         return
 

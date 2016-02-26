@@ -22,6 +22,7 @@ class Sprite:
     anim_f_count = 0
     anim_fps = 0
 
+    bitmap_byte = []
     bitmap_data = []
     palette = []
 
@@ -39,7 +40,7 @@ class Sprite:
         self.sprite_name = f.read(32).replace('\0', '')
 
         f.seek(832+32, 0)
-        bitmap_bytes = f.read()
+        self.bitmap_bytes = f.read()
 
         self.f_width = struct.unpack('<h', header_bytes[0:2])[0]
         self.f_height = struct.unpack('<h', header_bytes[2:4])[0]
@@ -60,7 +61,7 @@ class Sprite:
         self.debug_color = [ord(header_bytes[22])/255.0, ord(header_bytes[23])/255.0, ord(header_bytes[24])/255.0]
 
         self.bitmap_data = []
-        for b in bitmap_bytes:
+        for b in self.bitmap_bytes:
             p_index = ord(b)*3
             r, g, b = ord(self.palette[p_index]), ord(self.palette[p_index+1]), ord(self.palette[p_index+2])
             if r == 0 and g == 255 and b == 0:

@@ -83,7 +83,7 @@ void set_palette_color(uint8_t color, uint8_t r, uint8_t g, uint8_t b) {
 }
 
 void set_palette(uint8_t* palette) {
-	uint16_t num_colors = sizeof(palette)/3;
+	uint16_t num_colors = 256;
 	for (uint16_t i = 0; i < num_colors; i++) {
 		set_palette_color(i, palette[i*3+0], palette[i*3+1], palette[i*3+2]);
 	}

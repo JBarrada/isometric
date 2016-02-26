@@ -9,17 +9,19 @@
 
 uint8_t back_buffer[320*200];
 
-void set_pixel(uint16_t x, uint16_t y, uint8_t c) {
-	if ((x<SW) && (y<SH) && (x>=0) && (y>=0)) {
-		back_buffer[y*SW+x] = c;
-	}	
+
+void set_pixel(int x, int y, uint8_t c) {
+	if ((x<SW) && (y<SH)) {
+		back_buffer[(SH-y)*SW+x] = c;
+	}
 }
 
 void clear() {
-	
+	memset(back_buffer, 254, 320*200);
+	swap_buffers(back_buffer);
 }
 
 void flush() {
-	swap_buffers(&back_buffer);
+	swap_buffers(back_buffer);
 }
 

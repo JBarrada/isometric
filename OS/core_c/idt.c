@@ -47,7 +47,7 @@ void generic_interrupt_handler(struct cpu_state s) {
 	}
 	
 	if(s.vector==33) {
-		keyboard_irq();
+		//keyboard_irq();
 	}
 	
 	if(s.vector==0x30) {
