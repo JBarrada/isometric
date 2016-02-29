@@ -5,7 +5,8 @@
 #include <pic.h>
 #include <pit.h>
 
-uint8_t temp_keystate = 0;
+void (*keystate_callback)();
+uint8_t keystate = 0;
 
 void keyboard_init() {
 	irq_clear_mask(1);
@@ -19,27 +20,28 @@ void keyboard_irq() {
 	}
 	switch (sc) {
 		case KEY_LEFT:
-			temp_keystate |= 0x01; break;
+			keystate |= 0x01; break;
 		case KEY_LEFT+RELEASE:
-			temp_keystate &= 0xfe; break;
+			keystate &= 0xfe; break;
 			
 		case KEY_RIGHT:
-			temp_keystate |= 0x02; break;
+			keystate |= 0x02; break;
 		case KEY_RIGHT+RELEASE:
-			temp_keystate &= 0xfd; break;
+			keystate &= 0xfd; break;
 			
 		case KEY_UP:
-			temp_keystate |= 0x04; break;
+			keystate |= 0x04; break;
 		case KEY_UP+RELEASE:
-			temp_keystate &= 0xfb; break;
+			keystate &= 0xfb; break;
 			
 		case KEY_DOWN:
-			temp_keystate |= 0x08; break;
+			keystate |= 0x08; break;
 		case KEY_DOWN+RELEASE:
-			temp_keystate &= 0xf7; break;
+			keystate &= 0xf7; break;
 	}
+	keystate_callback(keystate);
 }
 
 uint8_t keystate() {
-	return temp_keystate;
+	return keystate;
 }

@@ -36,6 +36,7 @@
 
 void keyboard_irq();
 void keyboard_init();
-uint8_t keystate();
+
+void set_keystate_callback(void *callback);
 
 #endif

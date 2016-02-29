@@ -19,10 +19,30 @@
 #include <sprite.h>
 
 extern uint8_t _binary_game_MAPS_test_zipmap_start;
+MAP map;
+
+uint8_t update = 1;
+
+void keystate_callback(uint8_t keystate) { 
+	if ((state&1) == 1) {
+		map.character_pos_top[0] -= 0.5;
+		update = 1;
+	}
+	if (((state>>1)&1) == 1) {
+		map.character_pos_top[0] += 0.5;
+		update = 1;
+	}
+	if (((state>>2)&1) == 1) {
+		map.character_pos_top[1] += 0.5;
+		update = 1;
+	}
+	if (((state>>3)&1) == 1) {
+		map.character_pos_top[1] -= 0.5;
+		update = 1;
+	}
+}
 
 //uint8_t* tb = (uint8_t*) 0xB8000;
-
-MAP map;
 /*
 void debug_print(uint16_t x, uint16_t y, char *text){
 	uint16_t offset = y*80+x;
@@ -84,8 +104,8 @@ void kernel_main() {
 	map.character_pos_top[0] = 0;
 	map.character_pos_top[1] = 0;
 	
-	uint8_t update = 1;
 	for(;;) {
+		/*
 		uint8_t state = keystate();
 		
 		if ((state&1) == 1) {
@@ -104,7 +124,7 @@ void kernel_main() {
 			map.character_pos_top[1] -= 0.5;
 			update = 1;
 		}
-		
+		*/
 		if (update) {
 			clear();
 			draw_map(&map);
