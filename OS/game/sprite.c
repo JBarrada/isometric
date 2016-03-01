@@ -21,10 +21,10 @@ void draw_sprite(int cx, int cy, SPRITE *sprite) {
 	
 	for (uint16_t y=0; y<sprite->height; y++) {
 		for (uint16_t x=0; x<sprite->width; x++) {
-			set_pixel(ox+x, oy+y, 255);
+			//set_pixel(ox+x, oy+y, 255);
 			uint8_t index = sprite->bitmap[y*sprite->width+x];
 			if (index != 0xff) {
-				//set_pixel(ox+x, oy+y, index);
+				set_pixel(ox+x, oy+y, index);
 			}
 		}
 	}

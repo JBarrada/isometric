@@ -23,6 +23,9 @@ void write_regs(uint8_t* regs);
 void set_palette_color(uint8_t color, uint8_t r, uint8_t g, uint8_t b);
 void set_palette(uint8_t* pal);
 void swap_buffers(uint8_t* back_buffer);
+void swap_line(uint8_t* buffer, uint16_t y);
+
+void text_mode();
 
 void vga_init();
 

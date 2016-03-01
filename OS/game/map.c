@@ -34,8 +34,8 @@ void draw_map(MAP *map) {
 	float character_pos_iso[2];
 	tti(map->character_pos_top[0]*ISIZE, map->character_pos_top[1]*ISIZE, 0, character_pos_iso);
 	
-	int ox = 320-character_pos_iso[0];
-	int oy = 200-character_pos_iso[1];
+	int ox = 160-character_pos_iso[0];
+	int oy = 100-character_pos_iso[1];
 	
 	for (int y=(map->height-1); y>=0; y--) {
 		for (int x=0; x<map->width; x++) {
@@ -47,10 +47,13 @@ void draw_map(MAP *map) {
 					draw_sprite(iso[0]+ox, iso[1]+oy, &map->sprites[tile]);
 				}
 			}
+			if (((int)map->character_pos_top[0] == (x+1)) && ((int)map->character_pos_top[1] == (y+1))) {
+				circle_filled(160, 100, 8, 255);
+			}
 		}
 	}
 	
-	
+	/*
 	for (int gx=0; gx<map->width; gx++) {
 		for (int gy=0; gy<map->width; gy++) {
 			float iso[2];
@@ -58,5 +61,5 @@ void draw_map(MAP *map) {
 			set_pixel(iso[0]+ox, iso[1]+oy, 255);
 		}
 	}
-	
+	*/
 }

@@ -42,6 +42,6 @@ void keyboard_irq() {
 	keystate_callback(keystate);
 }
 
-uint8_t keystate() {
-	return keystate;
+void set_keystate_callback(void *callback) {
+	keystate_callback = callback;
 }

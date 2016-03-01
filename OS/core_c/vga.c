@@ -112,16 +112,20 @@ void swap_buffers(uint8_t* back_buffer) {
 	memcpy(front_buffer, back_buffer, 320*200);
 }
 
+void swap_line(uint8_t* buffer, uint16_t y) {
+	memcpy(front_buffer+(y*320), buffer, 320);
+}
+
 void text_mode() {
 	write_regs(g_80x25_text);
 	
 	uint8_t* vga_poke = (uint8_t*) 0x400;
 	
-	vga_poke[0x4A] = 80; // pokew(0x40, 0x4A, 80);
-	vga_poke[0x4A+1] = 0x00;
+	vga_poke[0x4A] = 0x00; // pokew(0x40, 0x4A, 80);
+	vga_poke[0x4A+1] = 80;
 	
-	vga_poke[0x4C] = 0xA0; // pokew(0x40, 0x4C, 80*25 * 2);
-	vga_poke[0x4C+1] = 0x0F;
+	vga_poke[0x4C] = 0x0f; // pokew(0x40, 0x4C, 80*25 * 2);
+	vga_poke[0x4C+1] = 0xa0;
 	
 	vga_poke[0x50] = 0x00; // pokew(0x40, 0x50, 0);
 	vga_poke[0x50+1] = 0x00;
