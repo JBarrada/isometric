@@ -37,7 +37,7 @@ for f in os.listdir("bitmaps\\"):
                              'tiles x: 1\n' \
                              'tiles y: 1\n' \
                              'tiles z: %d\n' \
-                             'anim count: 0\n' \
+                             'anim count: 1\n' \
                              'anim fps: 0\n' \
                              'bitmap path: bitmaps\%s\n' \
                              'sprite name: %s\n' \

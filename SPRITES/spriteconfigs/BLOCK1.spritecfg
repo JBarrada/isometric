@@ -7,10 +7,10 @@ iso left: 18
 tiles x: 1
 tiles y: 1
 tiles z: 0
-anim count: 0
+anim count: 1
 anim fps: 0
 bitmap path: bitmaps\BLOCK1.bmp
 sprite name: BLOCK1
-debug r: 128
-debug g: 128
-debug b: 128
+debug r: 0
+debug g: 255
+debug b: 0

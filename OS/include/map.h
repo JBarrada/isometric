@@ -13,6 +13,9 @@ typedef struct tagMAP {
 	uint16_t sprite_count;
 	
 	float character_pos_top[2];
+	uint8_t direction;
+	
+	SPRITE *character;
 	
 	uint8_t *palette;
 	
@@ -22,5 +25,6 @@ typedef struct tagMAP {
 } MAP;
 
 uint8_t load_map(uint8_t *map_data, MAP *map);
+uint8_t map_collision(float x, float y, MAP *map);
 void draw_map(MAP *map);
 #endif

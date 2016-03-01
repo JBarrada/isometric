@@ -33,6 +33,9 @@ class Map:
                 if not self.bank_contains_sprite(new_bank, self.sprite_bank[tile]):
                     new_bank_pointers[tile] = len(new_bank)
                     new_bank += [self.sprite_bank[tile]]
+        for s in self.sprite_bank:
+            if s.keep_in_bank:
+                new_bank += [s]
 
         # remap grid to use new bank
         new_grid = []
@@ -69,6 +72,9 @@ class Map:
                 if not self.bank_contains_sprite(new_bank, self.sprite_bank[tile]):
                     new_bank_pointers[tile] = len(new_bank)
                     new_bank += [self.sprite_bank[tile]]
+        for s in self.sprite_bank:
+            if s.keep_in_bank:
+                new_bank += [s]
 
         # remap grid to use new bank
         new_grid = []
@@ -92,6 +98,7 @@ class Map:
         global_palette = [0]*(255*3) + [0, 63, 0]
         global_pal_pos = 0
 
+        # remap/register sprite palette to global palette
         f.seek(776+(4*len(new_bank))+2)
         for s in new_bank:
             sprite_remap = [0]*256
@@ -119,6 +126,11 @@ class Map:
             iso_left_bytes = struct.pack('<h', s.iso_left)
             f.write(iso_left_bytes)
             f.write(chr(s.tiles_z))
+            f.write(chr(s.anim_f_count))
+
+            for c in s.sprite_name:
+                f.write(c)
+            f.write('\0'*(16-len(s.sprite_name)))
 
             # write bitmap data
             for b in s.bitmap_bytes:
@@ -165,7 +177,7 @@ class Map:
                 bank_end = True
                 continue
             if sprite_name != '':
-                self.sprite_bank += [sprite.Sprite('SPRITES\\%s.sprite' % sprite_name)]
+                self.sprite_bank += [sprite.Sprite('SPRITES\\compiled\\%s.sprite' % sprite_name)]
 
         # f.seek(16388, 0)
 

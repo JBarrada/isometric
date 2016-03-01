@@ -246,7 +246,7 @@ def keyboard(key, x, y):
 
     if key == 'l':
         m = map_file.Map()
-        m.load('default_map1.isomap')
+        m.load('test.isomap')
         load_map(m)
         return
 
@@ -329,9 +329,14 @@ def idle():
 
 def load_sprites():
     global sprite_bank
-    for f in os.listdir("SPRITES\\"):
+    for f in os.listdir("SPRITES\\compiled\\"):
         if f.endswith(".sprite"):
-            sprite_bank += [sprite.Sprite('SPRITES\\%s' % f)]
+            sprite_bank += [sprite.Sprite('SPRITES\\compiled\\%s' % f)]
+
+    keep_sprites = ['CHAR_CART']
+    for i in range(len(sprite_bank)):
+        if sprite_bank[i].sprite_name in keep_sprites:
+            sprite_bank[i].keep_in_bank = True
 
 
 def sprite_bank_gen_tex():

@@ -22,7 +22,7 @@ class Sprite:
     anim_f_count = 0
     anim_fps = 0
 
-    bitmap_byte = []
+    bitmap_bytes = []
     bitmap_data = []
     palette = []
 
@@ -31,6 +31,8 @@ class Sprite:
     debug_color = []
 
     textureid = None
+
+    keep_in_bank = False
 
     def __init__(self, location):
         f = open(location, 'rb')
@@ -61,7 +63,7 @@ class Sprite:
         self.debug_color = [ord(header_bytes[22])/255.0, ord(header_bytes[23])/255.0, ord(header_bytes[24])/255.0]
 
         self.bitmap_data = []
-        for b in self.bitmap_bytes:
+        for b in self.bitmap_bytes[:(self.f_width*self.f_height)-1]:
             p_index = ord(b)*3
             r, g, b = ord(self.palette[p_index]), ord(self.palette[p_index+1]), ord(self.palette[p_index+2])
             if r == 0 and g == 255 and b == 0:

@@ -32,6 +32,14 @@ uint32_t strlen(const char* str) {
 	return ret;
 }
 
+uint8_t strcompare(const char* str1, const char* str2) {
+	for (int i=0; i<strlen(str1); i++){
+		if (str1[i] != str2[i])
+			return 0;
+	}
+	return 1;
+}
+
 uint32_t strlen_trim(const char* str) {
 	uint32_t ret = strlen(str);
 	while (str[ret-1] == ' ' && (ret != 0))

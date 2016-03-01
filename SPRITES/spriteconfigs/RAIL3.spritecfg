@@ -7,7 +7,7 @@ iso left: 18
 tiles x: 1
 tiles y: 1
 tiles z: 1
-anim count: 0
+anim count: 1
 anim fps: 0
 bitmap path: bitmaps\RAIL3.bmp
 sprite name: RAIL3

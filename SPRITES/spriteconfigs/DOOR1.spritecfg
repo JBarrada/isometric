@@ -7,7 +7,7 @@ iso left: 18
 tiles x: 1
 tiles y: 1
 tiles z: 3
-anim count: 0
+anim count: 1
 anim fps: 0
 bitmap path: bitmaps\DOOR1.bmp
 sprite name: DOOR1

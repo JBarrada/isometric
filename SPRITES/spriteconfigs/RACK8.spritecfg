@@ -6,11 +6,11 @@ iso bottom: 21
 iso left: 18
 tiles x: 1
 tiles y: 1
-tiles z: 1
-anim count: 0
+tiles z: 2
+anim count: 1
 anim fps: 0
 bitmap path: bitmaps\RACK8.bmp
 sprite name: RACK8
 debug r: 0
-debug g: 255
-debug b: 0
+debug g: 0
+debug b: 255
