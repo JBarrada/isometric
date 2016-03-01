@@ -5,7 +5,6 @@
 #include <pic.h>
 #include <pit.h>
 
-void (*keystate_callback)();
 uint8_t keystate = 0;
 
 void keyboard_init() {
@@ -39,9 +38,4 @@ void keyboard_irq() {
 		case KEY_DOWN+RELEASE:
 			keystate &= 0xf7; break;
 	}
-	keystate_callback(keystate);
-}
-
-void set_keystate_callback(void *callback) {
-	keystate_callback = callback;
 }

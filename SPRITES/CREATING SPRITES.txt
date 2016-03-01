@@ -1,0 +1,32 @@
+Use GIMP
+
+almost all sprites are located in the sprites.XCF file
+
+new sprites belong ONLY on the "TILES" layer
+
+it is helpful to copy the basic 1x1x1 block piece and draw on top of it as a template
+
+to align a block with the grid, make sure the very tip pixel of the top surface is aligned with a red grid pixel
+
+the game engine is limited by VGA hardware, and therefore a palette of max 256 colors can be used. REUSE COLORS WHENEVER POSSIBLE!!!
+
+use existing sprites as size reference
+
+avoid using full green (r=0, g=255, b=0) because it is used to identify transparent selections in the engine
+
+
+
+helpful tools/shortcuts/tips in gimp
+
+"r" is the rectangle select tool
+"o" is the color picker (FOR REUSING COLORS)
+"m" for moving a pasted selection around
+shift+b is the paint bucket
+
+ctrl+x \ ctrl+c \ ctrl+v are probably going to be heavily used
+
+when setting up the pencil tool for drawing set the size to 1, and the brush to the first one, "pixel"
+when using the pencil tool, holding shift will help draw a perfect line from your last drawn pixel
+when using the pencil tool, holding ctrl will allow the pencil tool to act like a color picker tool
+
+make sure antialiasing\feathering is turned off for all tools. particularly the selection tools (rectangle select, lasso select, magic wand)

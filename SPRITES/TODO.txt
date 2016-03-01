@@ -1,0 +1,58 @@
+Directions compass:
+Vertical (Y-axis, "up-down"): in the isometric view, going from bottom left to top right... like /
+Horizontal (X-axis, "left-right"): in the isometric view, going from top left to bottom right... like \
+
+------------------------------------------------------------------------------------------------------
+!!!   ALL SPRITES ARE 1 BLOCK IN THE X AND Y DIRECTION, BUT CAN BE ANY HEIGHT IN THE Z DIRECTION   !!!
+!!!    OBJECTS 2 OR MORE BLOCKS WIDE SUCH AS RACKS AND TABLES MUST BE MADE OF 2 OR MORE SPRITES    !!!
+------------------------------------------------------------------------------------------------------
+
+* Blue rack (mostly vertical orientation, some horizontal)
+	- Barely filled (boxes)
+	- Slightly filled (boxes)
+	- Filled (boxes)
+	- Barely filled (trays)
+	- Slightly filled (trays)
+	- Filled (trays)
+
+* Stairs (just 1x1x1 block, stairs will be a portal, not actually climbable)
+	- Facing up (OWC, Front mez)
+	- Facing right (From eng lab)
+	- Facing left (Side mez)
+
+* Testing rack
+	- Faceing up
+	- Facing right
+	- Facing down
+	- Facing left
+
+* Table/Desk (horizontal and vertical orientations)
+	- Blue mat top (use as template)
+	- Blue mat top with junk
+	- Blue mat top with computer
+	
+* EOL verifier table (horizontal)
+	- Light on
+	- Light off
+
+* Reflow oven (horizontal, probably made of 3-4 sprites)
+
+* Pick and place machine (horizontal)
+	- Before reflow oven (made of 2-3 sprites)
+	- Before afromentioned pick and place machine
+
+* Solder paste machine (horizontal)
+
+* Silver rack (horizontal and vertical orientations)
+	- Empty
+	- Barely filled (trays)
+	- Slightly filled (trays)
+	- Filled (trays)
+
+* Emergency exit wall piece
+
+* Huge I-beam pillar toward middle of building
+
+* X-ray machine
+
+* Huge blue storage racks toward back of building
