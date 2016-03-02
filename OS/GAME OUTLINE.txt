@@ -1,4 +1,5 @@
 Starting characters:
+	- Omelius Mentos
 	- Mitch Lease (fired instantly)
 	- Kiev Tron (coffee pot in cart)
 	- Jeston Batcha (cart is oriented backwards)
@@ -6,7 +7,10 @@ Starting characters:
 NPCS
 	- Bell Across
 	- Soth Hoops
-	- Omelius III Menterratrones
+	- Omelius Mentos (playable)
+	- Mitch Lease (playable)
+	- Kiev Tron (playable)
+	- Jeston Batcha (playable)
 	- Kleff Everest
 	- Kress Gardoody
 	- Joe Kermit

@@ -13,9 +13,6 @@ typedef struct tagSPRITE {
 	uint8_t t_z;
 	uint8_t n_frames;
 	
-	uint8_t a_frame;
-	uint8_t animate;
-	
 	char * name;
 	uint8_t *bitmap;
 } SPRITE;

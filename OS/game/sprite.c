@@ -11,8 +11,6 @@ uint8_t load_sprite(uint8_t *sprite_data, SPRITE *sprite) {
 	
 	sprite->t_z = sprite_data[8];
 	sprite->n_frames = sprite_data[9];
-	sprite->a_frame = 0;
-	sprite->animate = 0;
 	
 	sprite->name = (char*)&sprite_data[10];
 

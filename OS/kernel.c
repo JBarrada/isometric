@@ -25,10 +25,30 @@ MAP map;
 extern uint8_t keystate;
 uint8_t update = 1;
 
-void key_callback() { 
-	float *pos = map.character_pos_top;
+uint8_t move_player() { 
+	float *pos = map.player.position;
 	
-	float step_size = 0.25;
+	float step = 0.25;
+	float half = step/2;
+	
+	float steps[] = {{-step, 0}, {-half, half}, {0, step}, {half, half}, {step, 0}, {half, -half}, {0, -step}, {-half, -half}};
+	uint8_t frme[] = {4, 5, 6, 7, 0,  1, 2, 3};
+	uint8_t dirs[] = {1, 5, 4, 6, 2, 10, 8, 9};
+	//                l ul  u ur  r  dr  d dl
+	
+	for (uint8_t i=0; i<8; i++) {
+		if (keystate == dirs[i]) {
+			if (map_collision(pos[0]+steps[i][0], pos[1]+steps[i][1], &map.player) == 0) {
+				pos[0] += steps[i][0];
+				pos[1] += steps[i][1];
+				
+				map.player.a_frame = frme[i];
+				update = 1;
+				return 1;
+			}
+		}
+	}
+	/*
 	float bounds = 1.0-step_size;
 	
 	if ((keystate&1) == 1) { // left
@@ -72,6 +92,7 @@ void key_callback() {
 		}
 	}
 	map.direction = keystate; //direction;
+	*/
 }
 
 void kernel_main() {
@@ -85,30 +106,19 @@ void kernel_main() {
 	asm("sti");
 	
 	load_map(&_binary_game_MAPS_test_zipmap_start, &map);
+	set_sprite("CHAR_CART", map.player.sprite);
 	set_palette(map.palette);
 	
-	/*
-	t_clear();
+	map.player.position[0] = 3;
+	map.player.position[1] = 35;
+	map.player.hitbox[0] = 0.75;
+	map.player.hitbox[1] = 0.75;
 	
-	t_print(0, 0, map.character->name);
-	
-	for (int i=0; i<map.sprite_count; i++) {
-		t_print(0, i+2, map.sprites[i].name);
-		char debug[16];
-		itoa(map.sprites[i].t_z, 10, debug);
-		t_print(16, i+2, debug);
-	}
-	
-	msleep(1000);
-	*/
 	
 	vga_init();
 	
 	clear();
 	flush();
-	
-	map.character_pos_top[0] = 3;
-	map.character_pos_top[1] = 35;
 	
 	for(;;) {
 		key_callback();

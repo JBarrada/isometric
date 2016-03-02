@@ -8,7 +8,7 @@
 
 #include <vga_font.h>
 
-uint8_t load_map(uint8_t *map_data, MAP *map) {
+uint16_t load_map(uint8_t *map_data, MAP *map) {
 	map->width = map_data[0]|(map_data[1]<<8);
 	map->height = map_data[2]|(map_data[3]<<8);
 	
@@ -22,15 +22,23 @@ uint8_t load_map(uint8_t *map_data, MAP *map) {
 	for (uint32_t i=0; i<map->sprite_count; i++) {
 		uint32_t sprite_start = map_data[778+(i*4)]|(map_data[779+(i*4)]<<8)|(map_data[780+(i*4)]<<16)|(map_data[781+(i*4)]<<24);
 		load_sprite(&map_data[sprite_start], &map->sprites[i]);
-		
-		if (strcompare("CHAR_CART", map->sprites[i].name) == 1) {
-			map->character = &map->sprites[i];
-		}
 	}
 	
-	
-	
-	return 1;
+	return map->sprite_count;
+}
+
+uint16_t get_sprite_index(char *name, MAP *map) {
+	for (uint16_t i=0; i<map->sprite_count; i++) {
+		if (strcompare(name, map->sprites[i].name) == 1) {
+			return i;
+		}
+	}
+}
+
+uint16_t set_sprite(char *name, SPRITE *sprite, MAP *map) {
+	uint16_t sprite_index = get_sprite_index(name, map);
+	sprite = &map->sprites[sprite_index];
+	return sprite_index;
 }
 
 int tti(float x, float y, float z, float* iso) {
@@ -40,10 +48,14 @@ int tti(float x, float y, float z, float* iso) {
     return 1;
 }
 
-uint8_t map_collision(float x, float y, MAP *map) {
-	int grid_index = ((int)y*map->width)+(int)x;
-	if (map->sprites[map->grid[grid_index]].t_z != 0)
-		return 1;
+uint8_t map_collision(float x, float y, OBJECT *object) {
+	float *hb = object->hitbox;
+	float pos[][] = {{x, y}, {x-hb[0], y}, {x-hb[0], y+hb[1]}, {x, y+hb[1]}};
+	for (uint8_t i=0; i<4; i++) {
+		int g_index = ((int)pos[i][1]*map->width)+(int)pos[i][0];
+		if (map->sprites[map->grid[g_index]].t_z != 0)
+			return 1;
+	}
 	return 0;
 }
 
@@ -54,9 +66,7 @@ void draw_map(MAP *map) {
 	int ox = 160-character_pos_iso[0];
 	int oy = 100-character_pos_iso[1];
 	
-	float char_iso[2];
-	tti((float)(map->character_pos_top[0]*ISIZE), (float)(map->character_pos_top[1]*ISIZE), 0, char_iso);
-	circle_filled(char_iso[0]+ox, char_iso[1]+oy, 5, 255);
+	//circle_filled(char_iso[0]+ox, char_iso[1]+oy, 5, 255);
 	
 	for (int y=(map->height-1); y>=0; y--) {
 		for (int x=0; x<map->width; x++) {
@@ -69,6 +79,7 @@ void draw_map(MAP *map) {
 				}
 			}
 			if (((int)map->character_pos_top[0] == (x)) && ((int)map->character_pos_top[1] == (y))) {
+				/*
 				uint8_t frame = 0;
 				if (map->direction == 1) // left
 					frame = 4;
@@ -88,8 +99,10 @@ void draw_map(MAP *map) {
 					frame = 5;
 				if (map->direction == 6) // up right
 					frame = 7;
-				
-				draw_sprite(char_iso[0]+ox, char_iso[1]+oy, map->character, frame);
+				*/
+				float char_iso[2];
+				tti((float)(map->player.position[0]*ISIZE), (float)(map->player.position[1]*ISIZE), 0, char_iso);
+				draw_sprite(char_iso[0]+ox, char_iso[1]+oy, map->player.sprite, map->player.a_frame);
 			}
 		}
 	}
