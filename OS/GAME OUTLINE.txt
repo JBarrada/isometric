@@ -1,0 +1,56 @@
+Starting characters:
+	- Mitch Lease (fired instantly)
+	- Kiev Tron (coffee pot in cart)
+	- Jeston Batcha (cart is oriented backwards)
+
+NPCS
+	- Bell Across
+	- Soth Hoops
+	- Omelius III Menterratrones
+	- Kleff Everest
+	- Kress Gardoody
+	- Joe Kermit
+	- Lerry Cornell
+	- Rocky Simmons
+	- Rendell Socky
+	- Sun Zebra
+	- Schteev Looper
+	- Tem Pennyflute (playable)
+	- Trivior Minor
+	- Clont Pwntown (playable)
+	- Bron Munny (playable)
+	- Bron Flute (playable)
+	- Kurren Mcday (escorts player to breakroom when fired, game over)
+	
+Controls
+	- Arrow keys = move character/menu navigation
+	- Z = interact/select
+	- X = cancel
+	- Esc = pause/get continue code
+
+Items
+	- LONG COMB
+	- SHORT COMB
+	- PERFORMANCE COMB
+	- iCOMB
+	- OLD COMB
+	- USED COMB
+
+	
+Main Menu
+	- New Game
+	- Enter Code
+	- Controls 
+	
+New Game
+	- Character selection
+	- Story (comb factory, factory is moving, perform tasks to keep your job)
+	- Game
+	
+Game
+	- "Report to Soth"
+	- Small talk with Soth. Asks if you want a tutorial.
+	- Soth tells to return with at least 10 passing "LONG COMBS"
+	- 
+
+	
