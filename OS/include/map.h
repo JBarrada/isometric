@@ -23,6 +23,9 @@ typedef struct tagMAP {
 	
 	OBJECT player;
 	
+	uint8_t follow_player;
+	float view[2];
+	
 	uint8_t *palette;
 	uint16_t *grid;
 	SPRITE sprites[256];
@@ -30,7 +33,6 @@ typedef struct tagMAP {
 
 uint16_t load_map(uint8_t *map_data, MAP *map);
 uint16_t get_sprite_index(char *name, MAP *map);
-uint16_t set_sprite(char *name, SPRITE *sprite, MAP *map);
-uint8_t map_collision(float x, float y, MAP *map);
+uint8_t map_collision(float x, float y, OBJECT *object, MAP *map);
 void draw_map(MAP *map);
 #endif

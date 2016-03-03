@@ -18,6 +18,7 @@
 
 #include <map.h>
 #include <sprite.h>
+#include <main_menu.h>
 
 extern uint8_t _binary_game_MAPS_test_zipmap_start;
 MAP map;
@@ -31,14 +32,14 @@ uint8_t move_player() {
 	float step = 0.25;
 	float half = step/2;
 	
-	float steps[] = {{-step, 0}, {-half, half}, {0, step}, {half, half}, {step, 0}, {half, -half}, {0, -step}, {-half, -half}};
+	float steps[8][2] = {{-step, 0}, {-half, half}, {0, step}, {half, half}, {step, 0}, {half, -half}, {0, -step}, {-half, -half}};
 	uint8_t frme[] = {4, 5, 6, 7, 0,  1, 2, 3};
 	uint8_t dirs[] = {1, 5, 4, 6, 2, 10, 8, 9};
 	//                l ul  u ur  r  dr  d dl
 	
 	for (uint8_t i=0; i<8; i++) {
 		if (keystate == dirs[i]) {
-			if (map_collision(pos[0]+steps[i][0], pos[1]+steps[i][1], &map.player) == 0) {
+			if (map_collision(pos[0]+steps[i][0], pos[1]+steps[i][1], &map.player, &map) == 0) {
 				pos[0] += steps[i][0];
 				pos[1] += steps[i][1];
 				
@@ -48,51 +49,7 @@ uint8_t move_player() {
 			}
 		}
 	}
-	/*
-	float bounds = 1.0-step_size;
-	
-	if ((keystate&1) == 1) { // left
-		if ((map_collision(pos[0]-step_size-bounds, pos[1], &map) == 0) && (map_collision(pos[0]-step_size-bounds, pos[1]+bounds, &map) == 0)) {
-			if (keystate == 1) {
-				pos[0] -= step_size;
-			} else {
-				pos[0] -= (step_size/2);
-			}
-			update = 1;
-		}
-	}
-	if (((keystate>>1)&1) == 1) { // right
-		if ((map_collision(pos[0]+step_size, pos[1], &map) == 0) && (map_collision(pos[0]+step_size, pos[1]+bounds, &map) == 0)) {
-			if (keystate == 2) {
-				pos[0] += step_size;
-			} else {
-				pos[0] += (step_size/2);
-			}
-			update = 1;
-		}
-	}
-	if (((keystate>>2)&1) == 1) { // up
-		if ((map_collision(pos[0], pos[1]+step_size+bounds, &map) == 0) && (map_collision(pos[0]-bounds, pos[1]+step_size+bounds, &map) == 0)) {
-			if (keystate == 4) {
-				pos[1] += step_size;
-			} else {
-				pos[1] += (step_size/2);
-			}
-			update = 1;
-		}
-	}
-	if (((keystate>>3)&1) == 1) { // down
-		if ((map_collision(pos[0], pos[1]-step_size, &map) == 0) && (map_collision(pos[0]-bounds, pos[1]-step_size, &map) == 0)) {
-			if (keystate == 8) {
-				pos[1] -= step_size;
-			} else {
-				pos[1] -= (step_size/2);
-			}
-			update = 1;
-		}
-	}
-	map.direction = keystate; //direction;
-	*/
+	return 1;
 }
 
 void kernel_main() {
@@ -105,9 +62,14 @@ void kernel_main() {
 
 	asm("sti");
 	
+	vga_init();
+	
+	show_main_menu();
+	
+	/*
 	load_map(&_binary_game_MAPS_test_zipmap_start, &map);
-	set_sprite("CHAR_CART", map.player.sprite);
-	set_palette(map.palette);
+	map.player.sprite = &map.sprites[get_sprite_index("CHAR_CART", &map)];
+	map.follow_player = 1;
 	
 	map.player.position[0] = 3;
 	map.player.position[1] = 35;
@@ -120,17 +82,26 @@ void kernel_main() {
 	clear();
 	flush();
 	
+	uint32_t passed = 0;
+	uint8_t black[256*3];
+	memset(black, 0, 256*3);
+	
+	gfx_set_palette(black);
+	
 	for(;;) {
-		key_callback();
+		if (passed == 1) fade_palette(map.palette, 250);
+		
+		move_player();
 		if (update) {
 			clear();
 			draw_map(&map);
 			flush();
 			update = 0;
-			msleep(20);
 		}
+		msleep(20);
+		passed++;
 	}
-	
+	*/
 	
 	for(;;) {
 		asm("hlt");

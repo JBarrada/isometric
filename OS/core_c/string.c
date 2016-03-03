@@ -33,7 +33,7 @@ uint32_t strlen(const char* str) {
 }
 
 uint8_t strcompare(const char* str1, const char* str2) {
-	for (int i=0; i<strlen(str1); i++){
+	for (uint32_t i=0; i<strlen(str1); i++){
 		if (str1[i] != str2[i])
 			return 0;
 	}

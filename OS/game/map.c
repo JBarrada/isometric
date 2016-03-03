@@ -33,12 +33,7 @@ uint16_t get_sprite_index(char *name, MAP *map) {
 			return i;
 		}
 	}
-}
-
-uint16_t set_sprite(char *name, SPRITE *sprite, MAP *map) {
-	uint16_t sprite_index = get_sprite_index(name, map);
-	sprite = &map->sprites[sprite_index];
-	return sprite_index;
+	return -1;
 }
 
 int tti(float x, float y, float z, float* iso) {
@@ -48,9 +43,9 @@ int tti(float x, float y, float z, float* iso) {
     return 1;
 }
 
-uint8_t map_collision(float x, float y, OBJECT *object) {
+uint8_t map_collision(float x, float y, OBJECT *object, MAP *map) {
 	float *hb = object->hitbox;
-	float pos[][] = {{x, y}, {x-hb[0], y}, {x-hb[0], y+hb[1]}, {x, y+hb[1]}};
+	float pos[4][2] = {{x, y}, {x-hb[0], y}, {x-hb[0], y+hb[1]}, {x, y+hb[1]}};
 	for (uint8_t i=0; i<4; i++) {
 		int g_index = ((int)pos[i][1]*map->width)+(int)pos[i][0];
 		if (map->sprites[map->grid[g_index]].t_z != 0)
@@ -60,15 +55,35 @@ uint8_t map_collision(float x, float y, OBJECT *object) {
 }
 
 void draw_map(MAP *map) {
-	float character_pos_iso[2];
-	tti(map->character_pos_top[0]*ISIZE, map->character_pos_top[1]*ISIZE, 0, character_pos_iso);
+	int ox, oy;
+	float view_iso[2];
+	if (map->follow_player == 1) {
+		tti(map->player.position[0]*ISIZE, map->player.position[1]*ISIZE, 0, view_iso);
+	} else {
+		tti(map->view[0]*ISIZE, map->view[1]*ISIZE, 0, view_iso);
+	}
+	ox = 160-view_iso[0];
+	oy = 100-view_iso[1];
 	
-	int ox = 160-character_pos_iso[0];
-	int oy = 100-character_pos_iso[1];
-	
-	//circle_filled(char_iso[0]+ox, char_iso[1]+oy, 5, 255);
-	
-	for (int y=(map->height-1); y>=0; y--) {
+
+	for (int x=0; x<map->width; x++) {
+		for (int y=(map->height-1); y>=(int)map->player.position[1]; y--) {
+			float iso[2];
+			tti((float)((x+1)*ISIZE), (float)(y*ISIZE), 0, iso);
+			uint16_t tile = map->grid[y*map->width+x];
+			if (tile != 0xffff) {
+				if ((ox+iso[0] < 350) && (ox+iso[0] > -30) && (oy+iso[1] < 230) && (oy+iso[1] > -100)) {
+					draw_sprite(iso[0]+ox, iso[1]+oy, &map->sprites[tile], 0);
+				}
+			}
+			if (((int)map->player.position[0] == (x)) && ((int)map->player.position[1] == (y))) {
+				float player_iso[2];
+				tti((float)(map->player.position[0]*ISIZE), (float)(map->player.position[1]*ISIZE), 0, player_iso);
+				draw_sprite(player_iso[0]+ox, player_iso[1]+oy, map->player.sprite, map->player.a_frame);
+			}
+		}
+	}
+	for (int y=(int)map->player.position[1]-1; y>=0; y--) {
 		for (int x=0; x<map->width; x++) {
 			float iso[2];
 			tti((float)((x+1)*ISIZE), (float)(y*ISIZE), 0, iso);
@@ -78,40 +93,15 @@ void draw_map(MAP *map) {
 					draw_sprite(iso[0]+ox, iso[1]+oy, &map->sprites[tile], 0);
 				}
 			}
-			if (((int)map->character_pos_top[0] == (x)) && ((int)map->character_pos_top[1] == (y))) {
-				/*
-				uint8_t frame = 0;
-				if (map->direction == 1) // left
-					frame = 4;
-				if (map->direction == 2) // right
-					frame = 0;
-				
-				if (map->direction == 4) // up
-					frame = 6;
-				if (map->direction == 8) // down
-					frame = 2;
-					
-				if (map->direction == 9) // down left
-					frame = 3;
-				if (map->direction == 10) // down right
-					frame = 1;
-				if (map->direction == 5) // up left
-					frame = 5;
-				if (map->direction == 6) // up right
-					frame = 7;
-				*/
-				float char_iso[2];
-				tti((float)(map->player.position[0]*ISIZE), (float)(map->player.position[1]*ISIZE), 0, char_iso);
-				draw_sprite(char_iso[0]+ox, char_iso[1]+oy, map->player.sprite, map->player.a_frame);
-			}
 		}
 	}
 	
+	
 	char debug[16];
-	itoa((int)map->character_pos_top[0], 10, debug);
+	itoa((int)map->player.position[0], 10, debug);
 	putstr(16, 0, debug, 255);
 	memset(debug, 0, 16);
-	itoa((int)map->character_pos_top[1], 10, debug);
+	itoa((int)map->player.position[1], 10, debug);
 	putstr(16, 8, debug, 255);
 	
 	putstr(0, 0, "X", 255);
