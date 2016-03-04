@@ -16,6 +16,17 @@ uint8_t palette_position;
 void gfx_set_palette(uint8_t *palette) {
 	main_palette = palette;
 	set_palette(palette);
+	
+	for (int i = 0; i < 256; i++) {
+		if (main_palette[i*3] == 0 && main_palette[i*3+1] == 0 && main_palette[i*3+2] == 0) {
+			palette_position = i;
+			return;
+		}
+	}
+}
+
+uint8_t* gfx_get_palette() {
+	return main_palette;
 }
 
 void gfx_clear_palette() {
@@ -24,6 +35,7 @@ void gfx_clear_palette() {
 	main_palette[255*3+0] = 0x00;
 	main_palette[255*3+1] = 0x3f;
 	main_palette[255*3+2] = 0x00;
+	gfx_set_palette(main_palette);
 }
 
 int in_palette(uint8_t *color) {
@@ -50,6 +62,16 @@ int gfx_register_palette(uint8_t *palette, uint8_t *remap) {
 	}
 	gfx_set_palette(main_palette);
 	return 1;
+}
+
+int gfx_register_color(uint8_t *color) {
+	int palette_index = in_palette(color);
+	if (palette_index == -1) {
+		memcpy(&main_palette[palette_position*3], color, 3);
+		palette_index = palette_position;
+		palette_position++;
+	}
+	return palette_index;
 }
 
 void fade_palette(uint8_t *dest, int delay) {

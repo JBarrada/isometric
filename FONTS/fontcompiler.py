@@ -72,9 +72,10 @@ for b in compressed:
     osfont.write(chr(b))
 
 osfont.close()
-# for row in range(bmp_height):
-#     debugstring = ''
-#     for col in range(sum(char_widths)):
-#         offset = row*sum(char_widths)+col
-#         debugstring += '1' if compressed[offset] == 1 else ' '
-#     print debugstring
+
+for row in range(bmp_height):
+    debugstring = ''
+    for col in range(sum(char_widths)):
+        offset = row*sum(char_widths)+col
+        debugstring += '1' if compressed[offset] == 1 else ' '
+    print debugstring

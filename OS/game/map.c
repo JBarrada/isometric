@@ -6,7 +6,7 @@
 #include <sprite.h>
 #include <map.h>
 
-#include <vga_font.h>
+#include <osfont.h>
 
 uint16_t load_map(uint8_t *map_data, MAP *map) {
 	map->width = map_data[0]|(map_data[1]<<8);
@@ -47,9 +47,14 @@ uint8_t map_collision(float x, float y, OBJECT *object, MAP *map) {
 	float *hb = object->hitbox;
 	float pos[4][2] = {{x, y}, {x-hb[0], y}, {x-hb[0], y+hb[1]}, {x, y+hb[1]}};
 	for (uint8_t i=0; i<4; i++) {
-		int g_index = ((int)pos[i][1]*map->width)+(int)pos[i][0];
-		if (map->sprites[map->grid[g_index]].t_z != 0)
+		if (((int)pos[i][0]<map->width) && (pos[i][0]>0) && ((int)pos[i][1]<map->height) && (pos[i][1]>0)) {
+			int g_index = ((int)pos[i][1]*map->width)+(int)pos[i][0];
+			if (map->sprites[map->grid[g_index]].t_z != 0)
+				return 1;
+		} else {
 			return 1;
+		}
+
 	}
 	return 0;
 }
@@ -65,7 +70,7 @@ void draw_map(MAP *map) {
 	ox = 160-view_iso[0];
 	oy = 100-view_iso[1];
 	
-
+	
 	for (int x=0; x<map->width; x++) {
 		for (int y=(map->height-1); y>=(int)map->player.position[1]; y--) {
 			float iso[2];
@@ -97,6 +102,7 @@ void draw_map(MAP *map) {
 	}
 	
 	
+	/*
 	char debug[16];
 	itoa((int)map->player.position[0], 10, debug);
 	putstr(16, 0, debug, 255, SMALLFONT);
@@ -107,7 +113,7 @@ void draw_map(MAP *map) {
 	putstr(0, 0, "X", 255, SMALLFONT);
 	putstr(0, 8, "Y", 255, SMALLFONT);
 
-	/*
+	
 	float target_iso[2];
 	tti((float)(map->character_pos_top[0]*ISIZE), (float)(map->character_pos_top[1]*ISIZE), 0, target_iso);
 	set_pixel(target_iso[0]+ox, target_iso[1]+oy, 255);

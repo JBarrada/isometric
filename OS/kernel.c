@@ -19,8 +19,10 @@
 #include <map.h>
 #include <sprite.h>
 #include <main_menu.h>
+#include <controls.h>
 
 #include <random.h>
+#include <osfont.h>
 
 extern uint8_t _binary_game_MAPS_test_zipmap_start;
 MAP map;
@@ -64,6 +66,8 @@ void kernel_main() {
 
 	asm("sti");
 	
+	
+	init_osfont();
 	/*
 	t_clear();
 	for (int i=0; i<25; i++) {
@@ -86,8 +90,14 @@ void kernel_main() {
 	*/
 	
 	vga_init();
+	for (;;) {
+		uint8_t selected = show_main_menu();
+		if (selected == 2) {
+			show_controls();
+		}
+	}
 	
-	show_main_menu();
+
 	
 	/*
 	load_map(&_binary_game_MAPS_test_zipmap_start, &map);

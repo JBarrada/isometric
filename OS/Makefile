@@ -7,9 +7,10 @@ CC=/home/swdev/cross-compile/usr/bin/i686-elf-gcc
 PROJDIR=machine core_c core_else game game/MAPS game/IMAGES game/FONTS
 
 SRCFILES:= $(shell find $(PROJDIRS) -type f -name "*.c")
+FNTFILES:= $(shell find $(PROJDIRS) -type f -name "*.osfont")
 IMGFILES:= $(shell find $(PROJDIRS) -type f -name "*.osimg")
 MAPFILES:= $(shell find $(PROJDIRS) -type f -name "*.zipmap")
-OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) $(patsubst %.zipmap,%.o,$(MAPFILES)) $(patsubst %.osimg,%.o,$(IMGFILES)) core_else/interrupt_handler.o core_else/boot.o machine/memcpy.o machine/memset.o
+OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) $(patsubst %.zipmap,%.o,$(MAPFILES)) $(patsubst %.osimg,%.o,$(IMGFILES)) $(patsubst %.osfont,%.o,$(FNTFILES)) core_else/interrupt_handler.o core_else/boot.o machine/memcpy.o machine/memset.o
 
 all: clean advent.iso
 	
@@ -26,6 +27,9 @@ all: clean advent.iso
 	objcopy -B i386 -I binary -O elf32-i386 $< $@
 
 %.o: %.osimg
+	objcopy -B i386 -I binary -O elf32-i386 $< $@
+
+%.o: %.osfont
 	objcopy -B i386 -I binary -O elf32-i386 $< $@
 	
 advent.bin: $(OBJFILES)

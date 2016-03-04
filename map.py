@@ -240,8 +240,8 @@ def keyboard(key, x, y):
 
     if key == 's':
         m = map_file.Map(grid_width, grid_height, sprite_bank, grid)
-        m.save('test.isomap')
-        m.save_zipmap('test.zipmap')
+        m.save('controls.isomap')
+        m.save_zipmap('controls.zipmap')
         return
 
     if key == 'l':
