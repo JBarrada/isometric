@@ -99,13 +99,13 @@ void draw_map(MAP *map) {
 	
 	char debug[16];
 	itoa((int)map->player.position[0], 10, debug);
-	putstr(16, 0, debug, 255);
+	putstr(16, 0, debug, 255, SMALLFONT);
 	memset(debug, 0, 16);
 	itoa((int)map->player.position[1], 10, debug);
-	putstr(16, 8, debug, 255);
+	putstr(16, 8, debug, 255, SMALLFONT);
 	
-	putstr(0, 0, "X", 255);
-	putstr(0, 8, "Y", 255);
+	putstr(0, 0, "X", 255, SMALLFONT);
+	putstr(0, 8, "Y", 255, SMALLFONT);
 
 	/*
 	float target_iso[2];

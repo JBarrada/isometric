@@ -1,4 +1,4 @@
-#include "smallfont.h"
+#include <vga_font.h>
 
 /**  0x20 - 32  - ' '  **/
 TCDATA SMALLFONT_ssp[9]={4,

@@ -18,10 +18,10 @@
 # define KEY_F11		0x57
 # define KEY_F12		0x58
 
-# define KEY_UP 		0x48
-# define KEY_DOWN 		0x50
-# define KEY_LEFT 		0x4B
-# define KEY_RIGHT 		0x4D
+# define KEY_UP 		0xE048
+# define KEY_DOWN 		0xE050
+# define KEY_LEFT 		0xE04B
+# define KEY_RIGHT 		0xE04D
 
 # define KEY_L_SHIFT 	0x2A
 # define KEY_R_SHIFT 	0x36
@@ -36,5 +36,6 @@
 
 void keyboard_irq();
 void keyboard_init();
+void set_keyboard_callback(void *callback);
 
 #endif

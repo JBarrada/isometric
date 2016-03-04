@@ -4,11 +4,12 @@ LIBS=-Iinclude -nostdlib
 AS=/home/swdev/cross-compile/i686-elf-as
 CC=/home/swdev/cross-compile/usr/bin/i686-elf-gcc
 
-PROJDIR=machine core_c core_else game game/MAPS
+PROJDIR=machine core_c core_else game game/MAPS game/IMAGES game/FONTS
 
 SRCFILES:= $(shell find $(PROJDIRS) -type f -name "*.c")
+IMGFILES:= $(shell find $(PROJDIRS) -type f -name "*.osimg")
 MAPFILES:= $(shell find $(PROJDIRS) -type f -name "*.zipmap")
-OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) $(patsubst %.zipmap,%.o,$(MAPFILES)) core_else/interrupt_handler.o core_else/boot.o machine/memcpy.o machine/memset.o
+OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) $(patsubst %.zipmap,%.o,$(MAPFILES)) $(patsubst %.osimg,%.o,$(IMGFILES)) core_else/interrupt_handler.o core_else/boot.o machine/memcpy.o machine/memset.o
 
 all: clean advent.iso
 	
@@ -22,6 +23,9 @@ all: clean advent.iso
 	$(CC) -c $< -o $@
 	
 %.o: %.zipmap
+	objcopy -B i386 -I binary -O elf32-i386 $< $@
+
+%.o: %.osimg
 	objcopy -B i386 -I binary -O elf32-i386 $< $@
 	
 advent.bin: $(OBJFILES)

@@ -1,12 +1,15 @@
 #include <gfx.h>
 #include <vga_font.h>
 #include <string.h>
-#include <smallfont.h>
 #include <stdint.h>
 
-int putch(int x, int y, char c, unsigned char color) {
-	uint8_t char_width = smallfont[(uint8_t)c][0];
-	uint8_t char_height = 8;
+TCLISTP *fonts[3] = {smallfont, axis, axis_big};
+uint8_t heights[3] = {8, 16, 25};
+uint8_t spacings[3] = {1, 2, 3};
+
+int putch(int x, int y, char c, uint8_t color, uint8_t font) {
+	uint8_t char_width = fonts[font][(uint8_t)c][0];
+	uint8_t char_height = heights[font];
 	
 	uint8_t ix, iy, bpr;
 	uint8_t bit;
@@ -27,12 +30,12 @@ int putch(int x, int y, char c, unsigned char color) {
 	return char_width;
 }
 
-void putstr(int x, int y, char *data, unsigned char color) {
+void putstr(int x, int y, char *data, uint8_t color, uint8_t font) {
 	int datalen = strlen(data);
 	
 	int char_width = 0;
 	for (int i = 0; i < datalen; i++) {
-		char_width = putch(x, y, data[i], color);
-		x += char_width+1;
+		char_width = putch(x, y, data[i], color, font);
+		x += char_width+spacings[font];
 	}
 }

@@ -1,2 +1,2 @@
-for /f %%a IN ('dir /b "spriteconfigs\*.spritecfg"') do call imgconvert.exe spriteconfigs\%%a
+for /f %%a IN ('dir /b "spriteconfigs\*.spritecfg"') do call spriteconvert.exe spriteconfigs\%%a
 move *.sprite compiled

@@ -1,4 +1,3 @@
-/** @author Levente Kurusa <levex@linux.com> **/
 #ifndef __PIC_H_
 #define __PIC_H_
 

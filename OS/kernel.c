@@ -20,6 +20,8 @@
 #include <sprite.h>
 #include <main_menu.h>
 
+#include <random.h>
+
 extern uint8_t _binary_game_MAPS_test_zipmap_start;
 MAP map;
 
@@ -61,6 +63,27 @@ void kernel_main() {
 	keyboard_init();
 
 	asm("sti");
+	
+	/*
+	t_clear();
+	for (int i=0; i<25; i++) {
+		char debug[32];
+		itoa(menubox.remap[i], 10, debug);
+		t_print(0, i, debug);
+		memset(debug, 0, 32);
+		
+		itoa(menubox.palette[i*3+0], 16, debug);
+		t_print(0+4, i, debug);
+		memset(debug, 0, 32);
+		itoa(menubox.palette[i*3+1], 16, debug);
+		t_print(3+4, i, debug);
+		memset(debug, 0, 32);
+		itoa(menubox.palette[i*3+2], 16, debug);
+		t_print(6+4, i, debug);
+		memset(debug, 0, 32);
+		
+	}
+	*/
 	
 	vga_init();
 	
