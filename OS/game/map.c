@@ -9,10 +9,12 @@
 #include <osfont.h>
 
 const uint8_t FRAMES[8] = {4, 5, 6, 7, 0, 1, 2, 3};
+const uint8_t DIR_KEYSTATE[16] = {0xff, 0, 4, 0xff, 2, 1, 3, 0xff, 6, 7, 5, 0xff, 0xff, 0xff, 0xff, 0xff};
 const uint8_t DIRECTIONS[8] = {D_L, D_UL, D_U, D_UR, D_R, D_DR, D_D, D_DL};
 const float DIR_STEP[8][2] = {{-1, 0}, {-0.5, 0.5}, {0, 1}, {0.5, 0.5}, {1, 0}, {0.5, -0.5}, {0, -1}, {-0.5, -0.5}};
 
 uint16_t load_map(uint8_t *map_data, MAP *map) {
+	memset(map, 0, sizeof(MAP));
 	map->width = map_data[0]|(map_data[1]<<8);
 	map->height = map_data[2]|(map_data[3]<<8);
 	
@@ -63,12 +65,12 @@ uint8_t map_collision(float x, float y, OBJECT *object, MAP *map) {
 	return 0;
 }
 
-uint8_t move_object(OBJECT *object, MAP *map uint8_t dir, float step) {
-	float steps[2] = {object->position[0]+(DIR_STEP[dir][0]*step), object->position[1]+(DIR_STEP[dir][1]*step)}
+uint8_t move_object(OBJECT *object, MAP *map, uint8_t dir, float step) {
+	float steps[2] = {object->position[0]+(DIR_STEP[dir][0]*step), object->position[1]+(DIR_STEP[dir][1]*step)};
 	
 	if (map_collision(steps[0], steps[1], object, map) == 0) {
-		object->position[0] += steps[0];
-		object->position[1] += steps[1];
+		object->position[0] = steps[0];
+		object->position[1] = steps[1];
 		object->a_frame = FRAMES[dir];
 		return 1;
 	}

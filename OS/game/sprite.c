@@ -1,8 +1,10 @@
+#include <io.h>
 #include <stdint.h>
 #include <gfx.h>
 #include <sprite.h>
 
 uint8_t load_sprite(uint8_t *sprite_data, SPRITE *sprite) {
+	memset(sprite, 0, sizeof(SPRITE));
 	sprite->width = sprite_data[0]|(sprite_data[1]<<8);
 	sprite->height = sprite_data[2]|(sprite_data[3]<<8);
 	

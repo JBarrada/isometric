@@ -16,6 +16,7 @@
 #define ISIZE 20.0
 
 extern const uint8_t FRAMES[8];
+extern const uint8_t DIR_KEYSTATE[16];
 extern const uint8_t DIRECTIONS[8];
 extern const float DIR_STEP[8][2];
 
@@ -48,6 +49,6 @@ typedef struct tagMAP {
 uint16_t load_map(uint8_t *map_data, MAP *map);
 uint16_t get_sprite_index(char *name, MAP *map);
 uint8_t map_collision(float x, float y, OBJECT *object, MAP *map);
-uint8_t move_object(OBJECT *object, MAP *map uint8_t dir, float step);
+uint8_t move_object(OBJECT *object, MAP *map, uint8_t dir, float step);
 void draw_map(MAP *map);
 #endif

@@ -1,8 +1,10 @@
 #include <stdint.h>
 #include <gfx.h>
 #include <osimg.h>
+#include <io.h>
 
 uint8_t load_osimg(uint8_t *osimg_data, OSIMG *osimg) {
+	memset(osimg, 0, sizeof(OSIMG));
 	osimg->width = osimg_data[0]|(osimg_data[1]<<8);
 	osimg->height = osimg_data[2]|(osimg_data[3]<<8);
 	

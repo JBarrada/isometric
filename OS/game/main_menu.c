@@ -29,6 +29,8 @@ uint8_t icon = 0;
 int selected = 0;
 uint8_t enter = 0;
 
+//static OSIMG menubox, detentelogo, x1, x2, x3;
+
 void menu_keyboard(uint16_t key) {
 	switch (key) {
 		case KEY_LEFT:
@@ -60,24 +62,27 @@ uint8_t show_main_menu() {
 	enter = 0;
 	selected = 0;
 	icon = 0;
-
-	OSIMG menubox, detentelogo, x1, x2, x3;
 	
 	set_keyboard_callback(&menu_keyboard);
 	
-	load_osimg(&_binary_game_IMAGES_MENUBOX_osimg_start, &menubox);
 	gfx_clear_palette();
-	gfx_register_palette(menubox.palette, menubox.remap);
 	
+	OSIMG menubox, detentelogo, x1, x2, x3;
+	
+	load_osimg(&_binary_game_IMAGES_MENUBOX_osimg_start, &menubox);
 	load_osimg(&_binary_game_IMAGES_DETENTELOGO_osimg_start, &detentelogo);
-	gfx_register_palette(detentelogo.palette, detentelogo.remap);
 	
 	load_osimg(&_binary_game_IMAGES_X1_osimg_start, &x1);
-	gfx_register_palette(x1.palette, x1.remap);
 	load_osimg(&_binary_game_IMAGES_X2_osimg_start, &x2);
-	gfx_register_palette(x2.palette, x2.remap);
 	load_osimg(&_binary_game_IMAGES_X3_osimg_start, &x3);
+	
+	gfx_clear_palette();
+	gfx_register_palette(menubox.palette, menubox.remap);
+	gfx_register_palette(detentelogo.palette, detentelogo.remap);
+	gfx_register_palette(x1.palette, x1.remap);
+	gfx_register_palette(x2.palette, x2.remap);
 	gfx_register_palette(x3.palette, x3.remap);
+	
 	int white_index = gfx_register_color((uint8_t[3]){63, 63, 63});
 	
 	uint8_t temp_palette[256*3];
@@ -85,14 +90,7 @@ uint8_t show_main_menu() {
 	gfx_clear_palette();
 	
 	int word=0, word_timer=0, menu_timer=0, fade_in=0;
-	for (;;) {
-		if (enter == 1) {
-			uint8_t black[256*3];
-			memset(black, 0, 256*3);
-			fade_palette(black, 500);
-			return selected;
-		}
-		
+	while (enter != 1) {
 		clear();
 		draw_osimg(95, 30, &menubox);
 		draw_osimg(80, 155, &detentelogo);
@@ -120,8 +118,9 @@ uint8_t show_main_menu() {
 			fade_palette(temp_palette, 500);
 		}
 	}
-	
-
-	
-	return 1;
+	uint8_t black[256*3];
+	memset(black, 0, 256*3);
+	fade_palette(black, 500);
+	gfx_clear_palette();
+	return selected;
 }

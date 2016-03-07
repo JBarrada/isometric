@@ -63,7 +63,7 @@ class Sprite:
         self.debug_color = [ord(header_bytes[22])/255.0, ord(header_bytes[23])/255.0, ord(header_bytes[24])/255.0]
 
         self.bitmap_data = []
-        for b in self.bitmap_bytes[:(self.f_width*self.f_height)-1]:
+        for b in self.bitmap_bytes[:(self.f_width*self.f_height)]:
             p_index = ord(b)*3
             r, g, b = ord(self.palette[p_index]), ord(self.palette[p_index+1]), ord(self.palette[p_index+2])
             if r == 0 and g == 255 and b == 0:

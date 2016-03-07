@@ -31,27 +31,8 @@ extern uint8_t keystate;
 uint8_t update = 1;
 
 uint8_t move_player() { 
-	float *pos = map.player.position;
-	
-	float step = 0.25;
-	float half = step/2;
-	
-	float steps[8][2] = {{-step, 0}, {-half, half}, {0, step}, {half, half}, {step, 0}, {half, -half}, {0, -step}, {-half, -half}};
-	uint8_t frme[] = {4, 5, 6, 7, 0,  1, 2, 3};
-	uint8_t dirs[] = {1, 5, 4, 6, 2, 10, 8, 9};
-	//                l ul  u ur  r  dr  d dl
-	
-	for (uint8_t i=0; i<8; i++) {
-		if (keystate == dirs[i]) {
-			if (map_collision(pos[0]+steps[i][0], pos[1]+steps[i][1], &map.player, &map) == 0) {
-				pos[0] += steps[i][0];
-				pos[1] += steps[i][1];
-				
-				map.player.a_frame = frme[i];
-				update = 1;
-				return 1;
-			}
-		}
+	if (DIR_KEYSTATE[keystate] != 0xff) {
+		update = move_object(&map.player, &map, DIR_KEYSTATE[keystate], 0.25);
 	}
 	return 1;
 }
@@ -90,8 +71,9 @@ void kernel_main() {
 	*/
 	
 	vga_init();
-	for (;;) {
-		uint8_t selected = show_main_menu();
+	int selected = -1;
+	while (selected != 4) {
+		selected = show_main_menu();
 		if (selected == 2) {
 			show_controls();
 		}

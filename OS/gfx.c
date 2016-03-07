@@ -14,7 +14,8 @@ uint8_t *main_palette;
 uint8_t palette_position;
 
 void gfx_set_palette(uint8_t *palette) {
-	main_palette = palette;
+	memcpy(main_palette, palette, 256*3);
+	//main_palette = palette;
 	set_palette(palette);
 	
 	for (int i = 0; i < 256; i++) {
@@ -84,9 +85,9 @@ void fade_palette(uint8_t *dest, int delay) {
 	uint8_t push_palette[256*3];
 	for (int f=0; f<(int)frames; f++) {
 		for (int i=0; i<256*3; i++) {
-			float new_val = (float)main_palette[i]+(float)(deltas[i]*f);
-			if (new_val>63) new_val = 63;
-			if (new_val<0) new_val = 0;
+			float new_val = (float)main_palette[i]+(deltas[i]*(float)f);
+			if (new_val>63.0) new_val = 63.0;
+			if (new_val<0.0) new_val = 0.0;
 			push_palette[i] = (uint8_t)(new_val);
 		}
 		set_palette(push_palette);

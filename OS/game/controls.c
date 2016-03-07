@@ -22,6 +22,9 @@ uint8_t esc = 0;
 extern uint8_t _binary_game_MAPS_controls_zipmap_start;
 extern uint8_t _binary_game_IMAGES_controls_osimg_start;
 
+//static MAP cmap;
+//static OSIMG controls;
+
 extern uint8_t keystate;
 
 void controls_keyboard(uint16_t key) {
@@ -33,38 +36,40 @@ void controls_keyboard(uint16_t key) {
 	}
 }
 
-uint8_t controls_move_player() { 
-	float *pos = cmap.player.position;
-	
-	float step = 0.25;
-	float half = step/2;
-	
-	float steps[8][2] = {{-step, 0}, {-half, half}, {0, step}, {half, half}, {step, 0}, {half, -half}, {0, -step}, {-half, -half}};
-	uint8_t frme[] = {4, 5, 6, 7, 0,  1, 2, 3};
-	uint8_t dirs[] = {1, 5, 4, 6, 2, 10, 8, 9};
-	//                l ul  u ur  r  dr  d dl
-	
-	for (uint8_t i=0; i<8; i++) {
-		if (keystate == dirs[i]) {
-			if (map_collision(pos[0]+steps[i][0], pos[1]+steps[i][1], &cmap.player, &cmap) == 0) {
-				pos[0] += steps[i][0];
-				pos[1] += steps[i][1];
-				
-				cmap.player.a_frame = frme[i];
-				//update = 1;
-				return 1;
-			}
-		}
+uint8_t controls_move_player(MAP *cmap) { 
+	if (DIR_KEYSTATE[keystate] != 0xff) {
+		move_object(&cmap->player, cmap, DIR_KEYSTATE[keystate], 0.25);
 	}
 	return 1;
 }
 
+void controls_init() {
+	/*
+	load_map(&_binary_game_MAPS_controls_zipmap_start, &cmap);
+	cmap.player.sprite = &cmap.sprites[get_sprite_index("CHAR_CART", &cmap)];
+	cmap.follow_player = 0;
+	
+	cmap.player.position[0] = 3;
+	cmap.player.position[1] = 3;
+	cmap.player.hitbox[0] = 0.75;
+	cmap.player.hitbox[1] = 0.75;
+	
+	cmap.view[0] = 0;
+	cmap.view[1] = 0;
+	cmap.c_offset[0] = -70;
+	cmap.c_offset[1] = -30;
+	*/
+	//load_osimg(&_binary_game_IMAGES_controls_osimg_start, &controls);
+}
+
 uint8_t show_controls() {
-	MAP cmap;
+	esc = 0;
 	
 	set_keyboard_callback(&controls_keyboard);
 	
 	gfx_clear_palette();
+	
+	MAP cmap;
 	load_map(&_binary_game_MAPS_controls_zipmap_start, &cmap);
 	cmap.player.sprite = &cmap.sprites[get_sprite_index("CHAR_CART", &cmap)];
 	gfx_set_palette(cmap.palette);
@@ -75,10 +80,10 @@ uint8_t show_controls() {
 	cmap.player.hitbox[0] = 0.75;
 	cmap.player.hitbox[1] = 0.75;
 	
-	cmap.view[0] = 3;
-	cmap.view[1] = 3;
-	cmap.c_offset[0] = 80;
-	cmap.c_offset[1] = -10;
+	cmap.view[0] = 0;
+	cmap.view[1] = 0;
+	cmap.c_offset[0] = -70;
+	cmap.c_offset[1] = -30;
 	
 	OSIMG controls;
 	load_osimg(&_binary_game_IMAGES_controls_osimg_start, &controls);
@@ -90,11 +95,8 @@ uint8_t show_controls() {
 	
 	int fade_in=0;
 	
-	for(;;) {
-		if (esc == 1) {
-			return 1;
-		}
-		controls_move_player();
+	while (esc != 1) {
+		controls_move_player(&cmap);
 		
 		clear();
 		draw_map(&cmap);
@@ -108,4 +110,9 @@ uint8_t show_controls() {
 			fade_palette(temp_palette, 500);
 		}
 	}
+	uint8_t black[256*3];
+	memset(black, 0, 256*3);
+	fade_palette(black, 500);
+	gfx_clear_palette();
+	return 1;
 }
