@@ -21,10 +21,8 @@ uint8_t esc = 0;
 
 extern uint8_t _binary_game_MAPS_controls_zipmap_start;
 extern uint8_t _binary_game_IMAGES_controls_osimg_start;
-MAP cmap;
 
 extern uint8_t keystate;
-
 
 void controls_keyboard(uint16_t key) {
 	switch (key) {
@@ -62,6 +60,8 @@ uint8_t controls_move_player() {
 }
 
 uint8_t show_controls() {
+	MAP cmap;
+	
 	set_keyboard_callback(&controls_keyboard);
 	
 	gfx_clear_palette();
@@ -75,8 +75,10 @@ uint8_t show_controls() {
 	cmap.player.hitbox[0] = 0.75;
 	cmap.player.hitbox[1] = 0.75;
 	
-	cmap.view[0] = 1;
+	cmap.view[0] = 3;
 	cmap.view[1] = 3;
+	cmap.c_offset[0] = 80;
+	cmap.c_offset[1] = -10;
 	
 	OSIMG controls;
 	load_osimg(&_binary_game_IMAGES_controls_osimg_start, &controls);

@@ -29,8 +29,6 @@ uint8_t icon = 0;
 int selected = 0;
 uint8_t enter = 0;
 
-OSIMG menubox, detentelogo, x1, x2, x3;
-
 void menu_keyboard(uint16_t key) {
 	switch (key) {
 		case KEY_LEFT:
@@ -62,10 +60,10 @@ uint8_t show_main_menu() {
 	enter = 0;
 	selected = 0;
 	icon = 0;
+
+	OSIMG menubox, detentelogo, x1, x2, x3;
 	
 	set_keyboard_callback(&menu_keyboard);
-	
-	//OSIMG menubox, detentelogo, x1, x2, x3;
 	
 	load_osimg(&_binary_game_IMAGES_MENUBOX_osimg_start, &menubox);
 	gfx_clear_palette();

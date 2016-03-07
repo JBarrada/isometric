@@ -8,6 +8,10 @@
 
 #include <osfont.h>
 
+const uint8_t FRAMES[8] = {4, 5, 6, 7, 0, 1, 2, 3};
+const uint8_t DIRECTIONS[8] = {D_L, D_UL, D_U, D_UR, D_R, D_DR, D_D, D_DL};
+const float DIR_STEP[8][2] = {{-1, 0}, {-0.5, 0.5}, {0, 1}, {0.5, 0.5}, {1, 0}, {0.5, -0.5}, {0, -1}, {-0.5, -0.5}};
+
 uint16_t load_map(uint8_t *map_data, MAP *map) {
 	map->width = map_data[0]|(map_data[1]<<8);
 	map->height = map_data[2]|(map_data[3]<<8);
@@ -59,6 +63,18 @@ uint8_t map_collision(float x, float y, OBJECT *object, MAP *map) {
 	return 0;
 }
 
+uint8_t move_object(OBJECT *object, MAP *map uint8_t dir, float step) {
+	float steps[2] = {object->position[0]+(DIR_STEP[dir][0]*step), object->position[1]+(DIR_STEP[dir][1]*step)}
+	
+	if (map_collision(steps[0], steps[1], object, map) == 0) {
+		object->position[0] += steps[0];
+		object->position[1] += steps[1];
+		object->a_frame = FRAMES[dir];
+		return 1;
+	}
+	return 0;
+}
+
 void draw_map(MAP *map) {
 	int ox, oy;
 	float view_iso[2];
@@ -67,8 +83,8 @@ void draw_map(MAP *map) {
 	} else {
 		tti(map->view[0]*ISIZE, map->view[1]*ISIZE, 0, view_iso);
 	}
-	ox = 160-view_iso[0];
-	oy = 100-view_iso[1];
+	ox = 160+map->c_offset[0]-view_iso[0];
+	oy = 100+map->c_offset[1]-view_iso[1];
 	
 	
 	for (int x=0; x<map->width; x++) {
