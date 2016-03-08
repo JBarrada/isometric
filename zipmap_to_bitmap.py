@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageOps
 import map_file
 import sprite
 
-target_isomap = "default_map1.isomap"
+target_isomap = "default_map2.isomap"
 
 
 def tti(x, y, z):
@@ -49,6 +49,8 @@ for y in range(m.g_height-1, -1, -1):
         ix, iy = tti((x+1)*isize, y*isize, 0)
         if m.grid[y*m.g_width+x] != -1:
             draw_sprite(ix+px_ox, iy+px_oy, m.sprite_bank[m.grid[y*m.g_width+x]])
+            if ((y*m.g_width+x)*100)/(m.g_width*m.g_height) % 5 == 0:
+                print('%d' % (((y*m.g_width+x)*100)/(m.g_width*m.g_height)))
 
 # draw gridlines
 for x in range(m.g_width+1):

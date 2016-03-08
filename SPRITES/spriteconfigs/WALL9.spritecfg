@@ -1,5 +1,5 @@
 f width: 36
-f height: 121
+f height: 101
 f top: 0
 f left: 0
 iso bottom: 21
@@ -9,8 +9,8 @@ tiles y: 1
 tiles z: 3
 anim count: 1
 anim fps: 0
-bitmap path: bitmaps\WALL1.bmp
-sprite name: WALL1
+bitmap path: bitmaps\WALL9.bmp
+sprite name: WALL9
 debug r: 32
 debug g: 32
 debug b: 32

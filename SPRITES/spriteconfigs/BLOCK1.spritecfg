@@ -11,6 +11,6 @@ anim count: 1
 anim fps: 0
 bitmap path: bitmaps\BLOCK1.bmp
 sprite name: BLOCK1
-debug r: 0
-debug g: 255
-debug b: 0
+debug r: 200
+debug g: 200
+debug b: 200

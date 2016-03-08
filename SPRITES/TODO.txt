@@ -56,3 +56,13 @@ Horizontal (X-axis, "left-right"): in the isometric view, going from top left to
 * X-ray machine
 
 * Huge blue storage racks toward back of building
+
+/ Fire extinguisher wall
+
+/ Air ducts around bathroom
+
+/ Round table break room
+
+* OPS wall with windows
+
+/ Lower Mez walls

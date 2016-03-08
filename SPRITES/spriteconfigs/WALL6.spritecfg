@@ -1,12 +1,12 @@
 f width: 36
-f height: 121
+f height: 91
 f top: 0
 f left: 0
 iso bottom: 21
 iso left: 18
 tiles x: 1
 tiles y: 1
-tiles z: 3
+tiles z: 2
 anim count: 1
 anim fps: 0
 bitmap path: bitmaps\WALL6.bmp
